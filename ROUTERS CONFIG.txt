@@ -1,0 +1,44 @@
+ROUTERS 
+
+en
+conf t
+host Rtr-B
+security passwords min-length 10
+login block-for 180 attempts 4 within 120
+no ip https server
+no ip http server
+username Tjen privilege 15 password CCVdab3001
+ip domain-name tjen.dom
+enable secret CiscoPRIV!!
+banner motd "Authorized access only!"
+
+line con 0
+exec-timeout 10
+password AdminCON!!
+login
+
+line vty 0 4
+exec-timeout 5
+login local
+transport input ssh
+exit
+
+crypto key generate rsa
+2048
+
+ipv6 unicast-routing
+
+int g 0/0/0
+ip add 172.19.22.98 255.255.255.252
+ipv6 add 2003:0:22:2::2/64
+no shut
+int g 0/0/1
+ip add 172.19.22.01 255.255.255.192
+ipv6 add 2003:0:22:1::1/64
+no shut
+
+ip route DESTNETW SUBNET NEXTHOP
+ipv6 route DESTNW NEXTHOP
+service pass
+exit
+copy run star

@@ -1,0 +1,35 @@
+SWITCHES
+
+en
+conf t
+host Sw-B
+security passwords min-length 10
+login block-for 180 attempts 4 within 120
+username Tjen privilege 15 password CCVdab3001
+ip domain-name tjen.dom
+enable secret CiscoPRIV!!
+banner motd "Authorized access only!"
+
+line con 0
+exec-timeout 10
+password AdminCON!!
+login
+
+line vty 0 4
+exec-timeout 5
+login local
+transport input ssh
+exit
+
+crypto key generate rsa
+2048
+
+ip default-gateway 172.19.22.01
+
+int vlan 1
+IP add 172.19.22.02 255.255.255.192
+no shut
+
+service pass
+exit
+copy run star
