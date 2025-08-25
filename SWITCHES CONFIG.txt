@@ -9,7 +9,7 @@ username Tjen privilege 15 password CCVdab3001
 ip domain-name tjen.dom
 enable secret CiscoPRIV!!
 banner motd "Authorized access only!"
-
+sdm prefer dual-ipv4-and-ipv6 default  
 line con 0
 exec-timeout 10
 password AdminCON!!
@@ -33,3 +33,7 @@ no shut
 service pass
 exit
 copy run star
+
+reload
+
+reload want sdm prefer dual-ipv4-and-ipv6 default to enqble ipv6
